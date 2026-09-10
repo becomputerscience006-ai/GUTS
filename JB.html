@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JB — buy and sell cars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16233A;
+    --navy-light:#1F324F;
+    --amber:#E0A458;
+    --amber-dark:#B67F3A;
+    --cream:#F7F5F0;
+    --ink:#1C1F26;
+    --muted:#5C6470;
+    --line:#DFDCD3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 48px;
+    border-bottom:1px solid var(--line);
+  }
+  .logo{font-family:'Fraunces',serif;font-size:24px;font-weight:600;letter-spacing:0.01em;color:var(--navy);}
+  nav{display:flex;gap:32px;font-size:14px;color:var(--navy);}
+  nav a:hover{color:var(--amber-dark);}
+  .nav-cta{
+    background:var(--navy);color:var(--cream);
+    padding:9px 18px;border-radius:3px;font-size:13px;
+  }
+  .nav-cta:hover{background:var(--navy-light);}
+
+  .hero{
+    background:var(--navy);
+    color:var(--cream);
+    padding:88px 48px 96px;
+    display:flex;
+    gap:64px;
+    align-items:flex-end;
+    flex-wrap:wrap;
+  }
+  .hero-copy{max-width:480px;}
+  .hero h1{font-size:52px;line-height:1.08;margin-bottom:18px;}
+  .hero p{color:#C7CEDB;font-size:16px;max-width:400px;margin-bottom:32px;}
+  .hero-stats{display:flex;gap:36px;}
+  .hero-stats div{border-left:1px solid #34435E;padding-left:14px;}
+  .hero-stats .num{font-family:'Fraunces',serif;font-size:26px;color:var(--amber);}
+  .hero-stats .label{font-size:12px;color:#9AA6BB;}
+
+  .search-panel{
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:6px;
+    padding:28px;
+    flex:1;
+    min-width:300px;
+    max-width:420px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.25);
+  }
+  .search-panel h3{font-size:15px;color:var(--navy);margin-bottom:16px;font-family:'Inter',sans-serif;font-weight:600;}
+  .search-panel label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;}
+  .search-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  .search-panel select,.search-panel input{
+    width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:3px;
+    font-size:14px;font-family:'Inter',sans-serif;background:#fff;color:var(--ink);
+  }
+  .search-btn{
+    width:100%;padding:13px;margin-top:6px;
+    background:var(--amber);color:var(--navy);
+    border:none;border-radius:3px;font-weight:600;font-size:14px;cursor:pointer;
+  }
+  .search-btn:hover{background:var(--amber-dark);color:#fff;}
+
+  main{padding:72px 48px;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:32px;flex-wrap:wrap;gap:12px;
+  }
+  .section-head h2{font-size:28px;color:var(--navy);}
+  .section-head a{font-size:13px;color:var(--amber-dark);border-bottom:1px solid var(--amber-dark);padding-bottom:2px;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    gap:20px;
+  }
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+    transition:border-color .15s ease;
+  }
+  .card:hover{border-color:var(--navy);}
+  .card .photo{
+    height:170px;background:linear-gradient(135deg,#EDE9DE,#DDD7C6);
+    display:flex;align-items:center;justify-content:center;color:#A79E88;font-size:12px;
+  }
+  .grid > .card:first-child .photo{height:260px;}
+  .card-body{padding:16px 18px 18px;}
+  .card-body .price{font-family:'Fraunces',serif;font-size:20px;color:var(--navy);margin-bottom:2px;}
+  .card-body .title{font-size:14px;color:var(--ink);margin-bottom:8px;}
+  .specs{display:flex;gap:10px;font-size:12px;color:var(--muted);}
+  .specs span:not(:last-child)::after{content:"·";margin-left:10px;color:var(--line);}
+
+  .why{
+    background:#fff;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:72px 48px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:40px;
+  }
+  .why h3{font-size:18px;color:var(--navy);margin-bottom:10px;}
+  .why p{font-size:14px;color:var(--muted);max-width:280px;}
+  .why .mark{color:var(--amber-dark);font-size:13px;font-weight:600;margin-bottom:14px;display:block;}
+
+  .cta-band{
+    background:var(--amber);
+    padding:56px 48px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
+  }
+  .cta-band h2{color:var(--navy);font-size:26px;max-width:420px;}
+  .cta-band a{
+    background:var(--navy);color:var(--cream);padding:14px 26px;border-radius:3px;font-size:14px;font-weight:500;
+  }
+  .cta-band a:hover{background:var(--navy-light);}
+
+  footer{
+    padding:40px 48px;display:flex;justify-content:space-between;
+    font-size:13px;color:var(--muted);flex-wrap:wrap;gap:12px;
+  }
+
+  @media (max-width:860px){
+    header,.hero,main,.why,.cta-band,footer{padding-left:24px;padding-right:24px;}
+    .hero h1{font-size:36px;}
+    .grid{grid-template-columns:1fr;}
+    .grid > .card:first-child .photo{height:170px;}
+    .why{grid-template-columns:1fr;}
+    nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#top" class="logo">JB</a>
+  <nav>
+    <a href="#listings">Buy</a>
+    <a href="#sell">Sell</a>
+    <a href="#">Financing</a>
+    <a href="#">Sign in</a>
+  </nav>
+  <a href="#sell" class="nav-cta">Sell your car</a>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <h1>Buy your next car with confidence.</h1>
+    <p>Every listing on JB is inspected, priced fairly, and backed by a seven-day return window.</p>
+    <div class="hero-stats">
+      <div><div class="num">12,400+</div><div class="label">cars listed</div></div>
+      <div><div class="num">4.8/5</div><div class="label">buyer rating</div></div>
+      <div><div class="num">7 days</div><div class="label">return window</div></div>
+    </div>
+  </div>
+
+  <form class="search-panel" onsubmit="return false;">
+    <h3>Find a car</h3>
+    <div class="search-row">
+      <div>
+        <label for="make">Make</label>
+        <select id="make"><option>Any make</option><option>Toyota</option><option>Honda</option><option>Ford</option><option>BMW</option></select>
+      </div>
+      <div>
+        <label for="model">Model</label>
+        <select id="model"><option>Any model</option></select>
+      </div>
+    </div>
+    <div class="search-row">
+      <div>
+        <label for="price">Max price</label>
+        <input id="price" type="text" placeholder="$25,000">
+      </div>
+      <div>
+        <label for="loc">Location</label>
+        <input id="loc" type="text" placeholder="ZIP code">
+      </div>
+    </div>
+    <button class="search-btn" type="submit">Search cars</button>
+  </form>
+</section>
+
+<main id="listings">
+  <div class="section-head">
+    <h2>Featured this week</h2>
+    <a href="#">View all listings</a>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="photo">photo</div>
+      <div class="card-body">
+        <div class="price">$24,500</div>
+        <div class="title">2022 Honda CR-V EX-L</div>
+        <div class="specs"><span>18,400 mi</span><span>Automatic</span><span>Austin, TX</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo">photo</div>
+      <div class="card-body">
+        <div class="price">$17,900</div>
+        <div class="title">2020 Mazda 3 Hatchback</div>
+        <div class="specs"><span>31,200 mi</span><span>Manual</span><span>Denver, CO</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo">photo</div>
+      <div class="card-body">
+        <div class="price">$38,200</div>
+        <div class="title">2023 BMW 330i xDrive</div>
+        <div class="specs"><span>9,100 mi</span><span>Automatic</span><span>Seattle, WA</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section class="why">
+  <div>
+    <span class="mark">01</span>
+    <h3>Inspected, not just listed</h3>
+    <p>A 150-point mechanical and history check runs before a single car goes live.</p>
+  </div>
+  <div>
+    <span class="mark">02</span>
+    <h3>Transparent pricing</h3>
+    <p>Every price is benchmarked against real regional sales, so you know if it's fair before you call.</p>
+  </div>
+  <div>
+    <span class="mark">03</span>
+    <h3>Sell in a weekend</h3>
+    <p>List for free, get matched with serious buyers, and close the sale without the back-and-forth.</p>
+  </div>
+</section>
+
+<section class="cta-band" id="sell">
+  <h2>Have a car to sell? Get a fair offer in minutes.</h2>
+  <a href="#">Start your listing</a>
+</section>
+
+<footer>
+  <div>JB Motors, Inc.</div>
+  <div>&copy; 2026 JB. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
